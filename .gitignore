@@ -1,0 +1,9 @@
+*~
+Makefile
+*.make
+*.cmake
+progress.marks
+*.out
+*.a
+CMakeFiles/
+CMakeCache.txt
