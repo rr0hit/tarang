@@ -1,7 +1,52 @@
 Tarang
 [Object-oriented Pseudo-spectral code for turbulence simulation]
 
-The original software was hosted here [1].  I've started building upon
-it after rewriting the history from Hg to Git.
+The original software was hosted here [1].  We've started building
+upon it after importing the history from Hg.
+
+Requirements
+------------
+Most significantly, the program depends on MPI [2] and FFTW3 [3]
+libraries.  On most distributions, the required packages should be
+called something like 'mpich2-dev' and 'libfftw3-dev'.  However, note
+that for the purposes of this program, FFTW3 needs to be compiled with
+MPI support, and this is not enabled by default.  Whether or not your
+distribution's fftw package contains this or not depends on the
+distribution.  If it does not, like in Debian's case [4], simply
+download and ask the configure script to '--enable-mpi' while
+compiling.
+
+Compilation
+-----------
+Invoke `cmake .` to generate a Makefile.  Then use make to compile the
+program.  If everything went well, the final target binary called
+'tarangMPI' should appear.
+
+Usage
+-----
+Execute 'tarangMPI' from within the 'info/' subdirectory.  Configure
+in prog_para.d.
+
+Caution
+-------
+Don't expect this program to behave in a sane/ nice way.  Most of it
+is written very badly; even removing comments from the configuration
+file will break the program.  Handle with care, and send tons of pull
+requests!
+
+Team
+----
+I'm part of a small research group in the Physics department of IIT
+Kharagpur.  We're attempting to extend this program to do something
+new and exciting.
+
+Professor: Krishna Kumar
+PhD student 1: Hirdesh Pharasi
+PhD student 2: Arnab Basak
+Undergrad: Me
 
 [1]: http://turbulence.phy.iitk.ac.in/downloads
+[2]: http://www.mcs.anl.gov/research/projects/mpich2/
+[3]: http://www.fftw.org/fftw2_doc/fftw_4.html
+[4]: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=637203
+

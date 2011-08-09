@@ -7,7 +7,7 @@
 RB_SLIP_DIAG
 
 # Directory where data (in and out) + parameters are stored
-/Users/mkv/data/new4.3/RB
+new4.21/RB
 
 #Dimensionality
 3
