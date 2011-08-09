@@ -82,9 +82,13 @@ ADD_EXECUTABLE(tarangMPI  src/main.h src/main.cc
 
 
 
+find_package(MPI REQUIRED)
+
 TARGET_LINK_LIBRARIES(tarangMPI IncFluid IncFlow fields plainfields four scft basis_basic m blitz fftw3_mpi fftw3 mpi)
 
-#find_package(HDF5 REQUIRED)
+SET(CMAKE_C_COMPILER mpicc)
+SET(CMAKE_CXX_COMPILER mpicxx)
+
 SET(CMAKE_BUILD_TYPE distribution)
 SET(CMAKE_CXX_FLAGS_DISTRIBUTION "-O3 -g")
 SET(CMAKE_C_FLAGS_DISTRIBUTION "-O3")
