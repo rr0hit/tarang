@@ -460,7 +460,7 @@ void IncFluid::Output_ring_to_ring(IncSF& T)
 		Output_ring_to_ring_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Output_ring_to_ring_RB(T);
 }	
 
@@ -661,7 +661,7 @@ void IncFluid::Output_cylinder_ring_to_ring(IncSF& T)
 		Output_cylinder_ring_to_ring_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Output_cylinder_ring_to_ring_RB(T);
 }
 

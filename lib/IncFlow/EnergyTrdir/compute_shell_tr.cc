@@ -88,7 +88,7 @@ void IncVF::Compute_shell_tr(IncSF& T)
 		Compute_shell_tr_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_shell_tr_RB(T);
 }
 

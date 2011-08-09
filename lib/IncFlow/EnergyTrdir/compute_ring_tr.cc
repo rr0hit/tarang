@@ -96,7 +96,7 @@ void IncVF::Compute_ring_tr(IncSF& T)
 		Compute_ring_tr_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_ring_tr_RB(T);
 }
 

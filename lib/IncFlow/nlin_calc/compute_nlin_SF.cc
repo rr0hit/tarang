@@ -68,10 +68,10 @@ void IncVF::Compute_nlin(IncSF& T)
 		Compute_nlin_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_nlin_RB(T);
 	
-	else if (globalvar_prog_kind == "NonBoussinesq")
+	else if (globalvar_prog_kind == "NON_BOUSSINESQ")
 		Compute_nlin_RB(T);
 }
 

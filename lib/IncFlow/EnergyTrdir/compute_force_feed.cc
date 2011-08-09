@@ -85,7 +85,7 @@ void IncVF::Compute_force_feed_shell(IncSF& T)
 		Compute_force_feed_shell_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_force_feed_shell_RB(T);	
 }
 
@@ -175,7 +175,7 @@ void IncVF::Compute_force_feed_ring(IncSF& T)
 		Compute_force_feed_ring_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_force_feed_ring_RB(T);
 }
 
@@ -271,7 +271,7 @@ void IncVF::Compute_force_feed_cylinder_ring(IncSF& T)
 		Compute_force_feed_cylinder_ring_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_force_feed_cylinder_ring_RB(T);
 }
 

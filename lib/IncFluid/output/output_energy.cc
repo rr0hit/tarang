@@ -89,7 +89,7 @@ void IncFluid::Output_global(IncSF& T)
 		Output_global_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Output_global_RB(T);
 }
 
@@ -401,7 +401,7 @@ void IncFluid::Output_shell_spectrum(IncSF& T)
 		Output_shell_spectrum_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Output_shell_spectrum_RB(T);
 }
 
@@ -611,7 +611,7 @@ void IncFluid::Output_ring_spectrum(IncSF& T)
 		Output_ring_spectrum_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Output_ring_spectrum_RB(T);
 }
   
@@ -899,7 +899,7 @@ void IncFluid::Output_cylinder_ring_spectrum(IncSF& T)
 		Output_cylinder_ring_spectrum_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Output_cylinder_ring_spectrum_RB(T);
 }
 

@@ -81,7 +81,7 @@ void IncVF::Compute_flux(IncSF& T)
 		Compute_flux_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_flux_RB(T);
 }
 

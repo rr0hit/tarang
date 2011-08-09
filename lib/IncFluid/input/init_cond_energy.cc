@@ -143,7 +143,7 @@ void  IncFluid::Init_cond_energy_spectrum(IncSF& T)
 		Init_cond_energy_spectrum_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Init_cond_energy_spectrum_RB(T);
 	
 }
@@ -596,7 +596,7 @@ void  IncFluid::Init_cond_energy_helicity_spectrum(IncSF& T)
 		Init_cond_energy_helicity_spectrum_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Init_cond_energy_helicity_spectrum_RB(T);
 }
 

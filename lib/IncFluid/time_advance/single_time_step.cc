@@ -94,7 +94,7 @@ void IncFluid::Single_time_step(IncSF& T, DP dt, DP a, DP b, DP c)
 		Single_time_step_scalar(T,dt, a, b, c);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq")) 
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ")) 
 		Single_time_step_RB(T,dt, a, b, c);
 	
 }	
@@ -451,7 +451,7 @@ void IncFluid::Compute_RK4_parts(IncSF& T, PlainCVF& tot_Vrhs, PlainCSF& tot_Srh
 		Compute_RK4_parts_scalar(T,tot_Vrhs, tot_Srhs, dt, b, factor);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			 || (globalvar_prog_kind == "NonBoussinesq"))
+			 || (globalvar_prog_kind == "NON_BOUSSINESQ"))
 		Compute_RK4_parts_RB(T,tot_Vrhs, tot_Srhs, dt, b, factor);
 }
 

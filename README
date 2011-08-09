@@ -29,10 +29,9 @@ in prog_para.d.
 
 Caution
 -------
-Don't expect this program to behave in a sane/ nice way.  Most of it
-is written very badly; even removing comments from the configuration
-file will break the program.  Handle with care, and send tons of pull
-requests!
+The program is written very badly, and it is quite fragile as a
+result.  To make things worse, there is no working testsuite.  Handle
+with care, and send tons of pull requests!
 
 Team
 ----

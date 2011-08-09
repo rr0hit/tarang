@@ -188,7 +188,7 @@ void  IncFluid::Init_cond_modes_SIMPLE(IncSF& T)
 		Init_cond_modes_SIMPLE_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			  || (globalvar_prog_kind == "NonBoussinesq") )
+			  || (globalvar_prog_kind == "NON_BOUSSINESQ") )
 		Init_cond_modes_SIMPLE_RB(T);
 }
 
@@ -594,7 +594,7 @@ void  IncFluid::Init_cond_modes_VORTICITY(IncSF& T)
 		Init_cond_modes_VORTICITY_scalar(T);
 	
 	else if ((globalvar_prog_kind == "RB_SLIP") || (globalvar_prog_kind == "RB_SLIP_DIAG")
-			|| (globalvar_prog_kind == "NonBoussinesq") )
+			|| (globalvar_prog_kind == "NON_BOUSSINESQ") )
 		Init_cond_modes_VORTICITY_RB(T);
 }
 
