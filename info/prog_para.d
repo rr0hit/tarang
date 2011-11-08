@@ -13,6 +13,6 @@
 $RB_SLIP_DIAG
 
 # Directory where data (in and out) + parameters are stored
-new4.21/RB
+modules/RB
 
 
