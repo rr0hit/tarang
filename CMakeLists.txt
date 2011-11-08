@@ -27,6 +27,7 @@ ${CMAKE_SOURCE_DIR}/src/IFluid
 ${CMAKE_SOURCE_DIR}/src/IMHD
 ${CMAKE_SOURCE_DIR}/src/IScalar
 ${CMAKE_SOURCE_DIR}/src/RBslip
+${CMAKE_SOURCE_DIR}/src/RBslipMHD
 )
 
 
@@ -48,6 +49,8 @@ ADD_EXECUTABLE(tarangMPI  src/main.h src/main.cc
 	src/RBslip/RB_slip_main.h
 	src/RBslip/RB_slip_main.cc
 	src/RBslip/RB_slip_diag_main.cc
+	src/RBslipMHD/RB_slipMHD_main.h
+	src/RBslipMHD/RB_slipMHD_main.cc
 	)
 
 

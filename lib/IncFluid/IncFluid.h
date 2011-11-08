@@ -353,8 +353,7 @@ public:
 	void Time_advance_NonBoussinesq(IncSF& T);	
 	//  time advance both V and scalar field T  for NonBoussinesq flows
 	void Time_advance(IncVF& W);	//  time advance U and B (MHD) 
-	void Time_advance(IncVF& W, IncSF& T);
-	
+	void Time_advance(IncVF& W, IncSF& T);	// time advance U, B, and T (RB MHD)
 	/// File operations
 	
 	void Open_field_input_files();

@@ -105,7 +105,8 @@ void IncFluid::Time_advance(IncSF& T)
 	else if (integ_scheme == "RK4") 
 	{
 		
-		static PlainCVF Vcopy(N);													
+		static PlainCVF Vcopy(N);
+
 		static PlainCSF Scopy(N);
 							  
 		static PlainCVF tot_Vrhs(N);								

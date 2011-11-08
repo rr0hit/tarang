@@ -90,6 +90,8 @@ int main(int argc, char** argv)
 		RB_slip_main(data_dir_name);
 	else if (globalvar_prog_kind == "RB_SLIP_DIAG")
 		RB_slip_diag_main(data_dir_name);
+	else if (globalvar_prog_kind == "RB_SLIP_MHD")
+		RB_slipMHD_main(data_dir_name);
 	else if (globalvar_prog_kind == "NON_BOUSSINESQ")
 		NonBoussinesq_main(data_dir_name);
 	else

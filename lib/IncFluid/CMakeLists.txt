@@ -71,8 +71,7 @@ ADD_LIBRARY(IncFluid  IncFluid_constants.h
 	output/output_str_fn.cc
 	time_advance/single_time_step.cc
 	time_advance/time_advance_NB.cc
-#	time_advance/time_advance_RBslip.cc
-#	time_advance/time_advance_RBslipMHD.cc
+	time_advance/time_advance_RBslipMHD.cc
     	time_advance/time_advance_SF.cc 
 	time_advance/time_advance_VF_MHD.cc 
   	time_advance/time_advance.cc 

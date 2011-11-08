@@ -9,10 +9,11 @@
 # 5: INC_MHD_DIAG
 # 6: RB_SLIP
 # 7: RB_SLIP_DIAG
-# 8: NON_BOUSSINESQ
-$RB_SLIP_DIAG
+# 8: RB_SLIP_MHD
+# 9: NON_BOUSSINESQ
+$RB_SLIP_MHD
 
 # Directory where data (in and out) + parameters are stored
-modules/RB
+modules/RB_SLIP_MHD
 
 
