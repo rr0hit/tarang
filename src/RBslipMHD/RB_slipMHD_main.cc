@@ -1,4 +1,4 @@
-#include "RB_slipMHD_main.h"
+#include "../main.h"
 
 // Global variables
 extern int my_id;								// My process id
@@ -73,8 +73,8 @@ int RB_slipMHD_main(string data_dir_name)
 	Array<int,1>	init_cond_int_para(MAXSIZE_INIT_COND_INT_PARA);
 	Array<DP,1>		init_cond_double_para(MAXSIZE_INIT_COND_DOUBLE_PARA);
 	string			init_cond_string_para[MAXSIZE_INIT_COND_STRING_PARA];
-	
-	
+
+
 	// forcing para
 	Array<int,1>	force_meta_para(MAXSIZE_FORCE_META_PARA);
 	Array<int,1>	force_int_para(MAXSIZE_FORCE_INT_PARA);
@@ -92,14 +92,14 @@ int RB_slipMHD_main(string data_dir_name)
 	para_file.open(filename.c_str());		// filename = data_dir_name/in/para.d
 
 	Read_para(para_file, 3, no_of_fields, N, string_switches, switches,
-			  diss_coefficients, hyper_diss_coefficients, 
-			  solver_meta_para, solver_int_para, solver_double_para, solver_string_para,
-			  time_para, time_save, 
-			  misc_output_para, ET_parameters, ET_shell_radii_sector_array,
-			  no_output_k_r, out_k_r_array,
-			  init_cond_meta_para, init_cond_int_para, 
-			  init_cond_double_para, init_cond_string_para,
-			  force_meta_para, force_int_para, force_double_para, force_string_para);
+		  diss_coefficients, hyper_diss_coefficients,
+		  solver_meta_para, solver_int_para, solver_double_para, solver_string_para,
+		  time_para, time_save,
+		  misc_output_para, ET_parameters, ET_shell_radii_sector_array,
+		  no_output_k_r, out_k_r_array,
+		  init_cond_meta_para, init_cond_int_para,
+		  init_cond_double_para, init_cond_string_para,
+		  force_meta_para, force_int_para, force_double_para, force_string_para);
 
 	string_switches[0] = data_dir_name;
 
@@ -108,180 +108,154 @@ int RB_slipMHD_main(string data_dir_name)
 
 	if (my_id == master_id)
 		cout << " ================ RB PARAMTERS ==================== "  << endl;
-	
+
 	// kfactor computation
 	DP	k0 = M_PI/sqrt(2.0);
-	
+
 	DP	kfactor[4];
-	
-	if (solver_int_para(1) == 0)		// kfactor as given
-	{
+
+	if (solver_int_para(1) == 0) {		// kfactor as given
 		kfactor[1] = solver_double_para(1);
 		kfactor[2] = solver_double_para(2);
 		kfactor[3] = solver_double_para(3);
-			
+
 	}
-	
-	else if (solver_int_para(1) == 1)	// kfactor multiplied by some predefined constant
-	{
+
+	else if (solver_int_para(1) == 1) {	// kfactor multiplied by some predefined constant
 		kfactor[1] = M_PI * solver_double_para(1);
 		kfactor[2] = k0 * solver_double_para(2);
 		kfactor[3] = k0 * solver_double_para(3);
 	}
-	
+
 	if (my_id == master_id)
-		cout << "kfactor: " << kfactor[1] << " "  << kfactor[2] << " "  << kfactor[3] 
-						<< endl << endl;
-	
-	
-	// Ra, Pr, Pr_switch, 
-	if (solver_int_para(2) == 0)	
+		cout << "kfactor: " << kfactor[1] << " "  << kfactor[2] << " "  << kfactor[3]
+		     << endl << endl;
+
+
+	// Ra, Pr, Pr_switch,
+	if (solver_int_para(2) == 0)
 		globalvar_Ra = solver_double_para(4);
-	
-	else if (solver_int_para(2) == 1)		
-		globalvar_Ra = (27.0*pow4(M_PI)/4.0)*solver_double_para(4); 
-	
-	globalvar_Pr = solver_double_para(5);  
-	
+	else if (solver_int_para(2) == 1)
+		globalvar_Ra = (27.0*pow4(M_PI)/4.0)*solver_double_para(4);
+
+	globalvar_Pr = solver_double_para(5);
+
 	globalvar_temperature_grad = solver_double_para(6);  // +1 for RB and -1 for stratified
-	
-	if (my_id == master_id) 
-	{	
+
+	if (my_id == master_id) {
 		cout << " Rayleigh no:  Ra =  " << globalvar_Ra << endl;
 		cout << " Prandtl no:  Pr = " << globalvar_Pr << endl;
-		cout << " Temperature gradient (+1 for RB, -1 for stratififed flow)  = " 
-				<< globalvar_temperature_grad << endl;
+		cout << " Temperature gradient (+1 for RB, -1 for stratififed flow)  = "
+		     << globalvar_temperature_grad << endl;
 	}
-	
+
 	// Pr_switch and RB_Uscaling
 	globalvar_Pr_switch = solver_string_para[1];
-	
+
 	globalvar_RB_Uscaling = solver_string_para[2];
-	
-	if (my_id == master_id) 
-	{
+
+	if (my_id == master_id) {
 		cout << " Pr_switch = " << globalvar_Pr_switch << endl;
 		cout << " RB_Uscaling = " << globalvar_RB_Uscaling << endl;
 		cout << "====================================================" << endl << endl;
 	}
 
 	// Construct output prefix for all the output files
-	string prefix_str,  Pr_str, r_str;							
+	string prefix_str,  Pr_str, r_str;
 	ostringstream Pr_buffer, r_buffer;
-	
-	Pr_buffer << globalvar_Pr;  
-	Pr_str = Pr_buffer.str(); 
-	
-	r_buffer << globalvar_Ra;	
+
+	Pr_buffer << globalvar_Pr;
+	Pr_str = Pr_buffer.str();
+
+	r_buffer << globalvar_Ra;
 	r_str = r_buffer.str();
-	
+
 	prefix_str = "%% Pr = " + Pr_str +  "  r = " + r_str;	// goes into all the output files
 
 
 	// Set Dissipation coefficients
-	if (globalvar_Pr_switch == "PRZERO") 
-	{
+	if (globalvar_Pr_switch == "PRZERO") {
 		diss_coefficients[0] = 1.0;
 		diss_coefficients[1] = 0.0;
 	}
-	
-	else if (globalvar_Pr_switch == "PRLARGE") 
-	{
-		if (globalvar_RB_Uscaling == "USMALL") 
-		{
+
+	else if (globalvar_Pr_switch == "PRLARGE") {
+		if (globalvar_RB_Uscaling == "USMALL") {
 			diss_coefficients[0] = globalvar_Pr;              //  Coeff of grad^2 u
 			diss_coefficients[1]  = 1.0;			// Coeff of grad^2 T
-		}
-		else if (globalvar_RB_Uscaling == "ULARGE") 
-		{
-			diss_coefficients[0] = sqrt(globalvar_Pr/globalvar_Ra);             
-			diss_coefficients[1]  = 1/sqrt(globalvar_Pr*globalvar_Ra);			
+		} else if (globalvar_RB_Uscaling == "ULARGE") {
+			diss_coefficients[0] = sqrt(globalvar_Pr/globalvar_Ra);
+			diss_coefficients[1]  = 1/sqrt(globalvar_Pr*globalvar_Ra);
 		}
 	}
-	
-	else if (globalvar_Pr_switch == "PRSMALL") 
-	{
-		if (globalvar_RB_Uscaling == "USMALL") 
-		{
-			diss_coefficients[0] = 1.0;             
-			diss_coefficients[1]  = 1/globalvar_Pr;			
-		}
-		else if (globalvar_RB_Uscaling == "ULARGE") 
-		{
-			diss_coefficients[0] = sqrt(globalvar_Pr/globalvar_Ra);             
-			diss_coefficients[1]  = 1/sqrt(globalvar_Pr*globalvar_Ra);			
+
+	else if (globalvar_Pr_switch == "PRSMALL") {
+		if (globalvar_RB_Uscaling == "USMALL") {
+			diss_coefficients[0] = 1.0;
+			diss_coefficients[1]  = 1/globalvar_Pr;
+		} else if (globalvar_RB_Uscaling == "ULARGE") {
+			diss_coefficients[0] = sqrt(globalvar_Pr/globalvar_Ra);
+			diss_coefficients[1]  = 1/sqrt(globalvar_Pr*globalvar_Ra);
 		}
 	}
-	
-	else if (globalvar_Pr_switch == "PRINFTY") 
-	{
-		if (globalvar_RB_Uscaling == "USMALL") 
-		{
+
+	else if (globalvar_Pr_switch == "PRINFTY") {
+		if (globalvar_RB_Uscaling == "USMALL") {
 			diss_coefficients[0] = globalvar_Pr;              //  Coeff of grad^2 u
 			diss_coefficients[1]  = 1.0;			// Coeff of grad^2 T
-		}
-		else if (globalvar_RB_Uscaling == "ULARGE") 
-		{
+		} else if (globalvar_RB_Uscaling == "ULARGE") {
 			cout << "ERROR: For PRINFTY, ULARGE option is not allowed" << endl;
 			exit(0);
 		}
 	}
 
 	string basis_type  = string_switches[1];
-	
-	// Local_N1, local_N2 assignments 
-	if (N[2] > 1) {	
+
+	// Local_N1, local_N2 assignments
+	if (N[2] > 1) {
 		if ((basis_type == "FOUR") && (globalvar_fftw_original_switch == 1))	{
-			int alloc_local;											  
+			int alloc_local;
 			alloc_local = fftw_mpi_local_size_3d_transposed(N[1], N[2], N[3], MPI_COMM_WORLD,
 									&local_N1, &local_N1_start, &local_N2, &local_N2_start);
-		}
-			
-		else {
-			local_N1 = N[1]/numprocs;			
+		} else {
+			local_N1 = N[1]/numprocs;
 			local_N2 = N[2]/numprocs;
 			local_N1_start = my_id * local_N1;
-			local_N2_start = my_id * local_N2;		
+			local_N2_start = my_id * local_N2;
 		}
 	}
-	
-	else if (N[2] == 1)
-	{
-		if (basis_type == "FOUR")
-		{
-			
-			int alloc_local;											  
+
+	else if (N[2] == 1) {
+		if (basis_type == "FOUR") {
+			int alloc_local;
 			alloc_local = fftw_mpi_local_size_2d_transposed(N[1], N[3], MPI_COMM_WORLD,
-															&local_N1, &local_N1_start, &local_N2, &local_N2_start);
-		}
-		
-		else if (basis_type == "SCFT")
-		{
-			local_N1 = N[1]/numprocs;			
+									&local_N1, &local_N1_start, &local_N2, &local_N2_start);
+		} else if (basis_type == "SCFT") {
+			local_N1 = N[1]/numprocs;
 			local_N2 = N[3]/numprocs;
 			local_N1_start = my_id * local_N1;
-			local_N2_start = my_id * local_N2;		
+			local_N2_start = my_id * local_N2;
 		}
-	}	
-	
+	}
+
 	if (my_id == master_id) cout << "No or processors = " << numprocs << endl << endl;
-	
+
 	cout << "MY ID, local_N1, local_N1_start, local_N2, local_N2_start = " << my_id << "  "
-		 << local_N1 << "  " << local_N1_start << "  " << local_N2 << "  " << local_N2_start
-		 << endl << endl;
+	     << local_N1 << "  " << local_N1_start << "  " << local_N2 << "  " << local_N2_start
+	     << endl << endl;
 
 	// Constructors of Vector and Scalar fields
 
-	IncFluid  U(N, string_switches, switches, kfactor, 
-				diss_coefficients[0], hyper_diss_coefficients[0],
-				solver_meta_para, solver_int_para, solver_double_para, solver_string_para,
-				time_para, time_save,
-				misc_output_para, no_output_k_r, out_k_r_array,
-				ET_parameters, ET_shell_radii_sector_array,
-				init_cond_meta_para, init_cond_int_para, 
-				init_cond_double_para, init_cond_string_para,
-				force_meta_para, force_int_para, force_double_para, force_string_para
-				);		
+	IncFluid  U(N, string_switches, switches, kfactor,
+		    diss_coefficients[0], hyper_diss_coefficients[0],
+		    solver_meta_para, solver_int_para, solver_double_para, solver_string_para,
+		    time_para, time_save,
+		    misc_output_para, no_output_k_r, out_k_r_array,
+		    ET_parameters, ET_shell_radii_sector_array,
+		    init_cond_meta_para, init_cond_int_para,
+		    init_cond_double_para, init_cond_string_para,
+		    force_meta_para, force_int_para, force_double_para, force_string_para
+		    );
 
 	IncVF     W(N, string_switches, switches, kfactor,
 		    diss_coefficients[1], hyper_diss_coefficients[1],
@@ -310,70 +284,58 @@ int RB_slipMHD_main(string data_dir_name)
 	if (my_id == master_id)
 		U.Close_field_input_files();
 
-	//
-	//
-	if (my_id == master_id)
-		{
-			U.Open_output_files(prefix_str);
-			cout << endl << "STARTING THE SIMULATION NOW" << endl;
-		}
+	if (my_id == master_id)	{
+		U.Open_output_files(prefix_str);
+		cout << endl << "STARTING THE SIMULATION NOW" << endl;
+	}
 
 	int  iter=0;  // iterations
 	U.Tnow = U.Tinit;
 	U.Output_all_inloop(W, T);		// for init cond
 
-	do
-		{
+	do {
 
-			U.Compute_force(W, T);
-			// Both for V and Temperature field
+		U.Compute_force(W, T);
+		// Both for V and Temperature field
 
-			U.Compute_nlin(W, T);
-			U.Output_field_k_inloop(W, T);
-			// T(k) in the output computation needs nlin at the present time
+		U.Compute_nlin(W, T);
+		U.Output_field_k_inloop(W, T);
+		// T(k) in the output computation needs nlin at the present time
 
-			U.Add_force(W, T);
+		U.Add_force(W, T);
 
-			U.Compute_pressure();
-			U.Output_pressure_spectrum_inloop();
-			// Output pressure spectrum at the present time
+		U.Compute_pressure();
+		U.Output_pressure_spectrum_inloop();
+		// Output pressure spectrum at the present time
 
-			U.Tdt = U.Get_dt(W, T);
-			U.Tnow = U.Tnow + U.Tdt;
-			iter++;
+		U.Tdt = U.Get_dt(W, T);
+		U.Tnow = U.Tnow + U.Tdt;
+		iter++;
 
-			U.Time_advance(W, T);
-			// FIELD AT new time.
+		U.Time_advance(W, T);
+		// FIELD AT new time.
 
-			// Output at new time..
-			U.CV_Compute_totalenergy_diss();
-			T.CS_Compute_totalenergy_diss();
-			if ( isnan(U.CV_total_energy) || isnan(T.CS_total_energy) )
-			{
-				cout << "ERROR: Numerical Overflow " << endl;
-				break;
-			}
-
-			if ((U.free_slip_verticalwall_switch == 1) && (U.basis_type == "SCFT"))
-				U.free_slip_verticalwall_field(W, T);
-
-			if (U.apply_realitycond_alltime_switch == 1)
-				U.Satisfy_reality_condition_field(W, T);
-
-			U.Output_all_inloop(W, T);
-
+		// Output at new time..
+		U.CV_Compute_totalenergy_diss();
+		T.CS_Compute_totalenergy_diss();
+		if ( isnan(U.CV_total_energy) || isnan(T.CS_total_energy) ) {
+			cout << "ERROR: Numerical Overflow " << endl;
+			break;
 		}
+
+		if ((U.free_slip_verticalwall_switch == 1) && (U.basis_type == "SCFT"))
+			U.free_slip_verticalwall_field(W, T);
+
+		if (U.apply_realitycond_alltime_switch == 1)
+			U.Satisfy_reality_condition_field(W, T);
+
+		U.Output_all_inloop(W, T);
+
+	}
 	while (U.Tnow < U.Tfinal);
 
 	if (my_id == master_id)
 		U.Close_output_files();
 
+	return 1;
 }
-
-
-
-
-//**************************** End of RB_slipMHD_main.cc **************************************
-
-
-

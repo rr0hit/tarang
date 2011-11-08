@@ -35,21 +35,15 @@ ADD_EXECUTABLE(tarangMPI  src/main.h src/main.cc
 	src/read_prog_para.cc
 	src/read_para.cc
 	src/read_diag_para.cc
-	src/IFluid/Ifluid_main.h
 	src/IFluid/Ifluid_main.cc
 	src/IFluid/Ifluid_diag_main.cc
-	src/IMHD/IMHD_main.h
 	src/IMHD/IMHD_main.cc
 	src/IMHD/IMHD_diag_main.cc
-	src/IScalar/Iscalar_main.h
 	src/IScalar/Iscalar_main.cc
 	src/IScalar/Iscalar_diag_main.cc
 	src/NB/NonBoussinesq_main.cc
-	src/NB/NonBoussinesq_main.h
-	src/RBslip/RB_slip_main.h
 	src/RBslip/RB_slip_main.cc
 	src/RBslip/RB_slip_diag_main.cc
-	src/RBslipMHD/RB_slipMHD_main.h
 	src/RBslipMHD/RB_slipMHD_main.cc
 	)
 
