@@ -16,7 +16,7 @@ extern Uniform<DP> SPECrand;					// for random vars--  declared in main.cc
 
 int RB_slipMHD_main(string data_dir_name)
 {
-	cout << "ENTERING RB_slipMHD_main :   my_id " << my_id << endl;
+	cout << "Entering RB_slipMHD_main (my_id: " << my_id << ")" << endl;
 
 	//**************** Variable declarations *******************
 
@@ -107,7 +107,7 @@ int RB_slipMHD_main(string data_dir_name)
 	globalvar_waveno_switch = switches(15);
 
 	if (my_id == master_id)
-		cout << " ================ RB PARAMTERS ==================== "  << endl;
+		cout << endl << "================ RB PARAMTERS ==================== "  << endl;
 
 	// kfactor computation
 	DP	k0 = M_PI/sqrt(2.0);
@@ -128,8 +128,7 @@ int RB_slipMHD_main(string data_dir_name)
 	}
 
 	if (my_id == master_id)
-		cout << "kfactor: " << kfactor[1] << " "  << kfactor[2] << " "  << kfactor[3]
-		     << endl << endl;
+		cout << "kfactor: " << kfactor[1] << " "  << kfactor[2] << " "  << kfactor[3] << endl;
 
 
 	// Ra, Pr, Pr_switch,
@@ -139,14 +138,12 @@ int RB_slipMHD_main(string data_dir_name)
 		globalvar_Ra = (27.0*pow4(M_PI)/4.0)*solver_double_para(4);
 
 	globalvar_Pr = solver_double_para(5);
-
 	globalvar_temperature_grad = solver_double_para(6);  // +1 for RB and -1 for stratified
 
 	if (my_id == master_id) {
-		cout << " Rayleigh no:  Ra =  " << globalvar_Ra << endl;
-		cout << " Prandtl no:  Pr = " << globalvar_Pr << endl;
-		cout << " Temperature gradient (+1 for RB, -1 for stratififed flow)  = "
-		     << globalvar_temperature_grad << endl;
+		cout << "Rayleigh number Ra =  " << globalvar_Ra << endl;
+		cout << "Prandtl number Pr = " << globalvar_Pr << endl;
+		cout << "Temperature gradient (+1: RB, -1: stratififed flow): " << globalvar_temperature_grad << endl;
 	}
 
 	// Pr_switch and RB_Uscaling
@@ -155,8 +152,8 @@ int RB_slipMHD_main(string data_dir_name)
 	globalvar_RB_Uscaling = solver_string_para[2];
 
 	if (my_id == master_id) {
-		cout << " Pr_switch = " << globalvar_Pr_switch << endl;
-		cout << " RB_Uscaling = " << globalvar_RB_Uscaling << endl;
+		cout << "Pr_switch = " << globalvar_Pr_switch << endl;
+		cout << "RB_Uscaling = " << globalvar_RB_Uscaling << endl;
 		cout << "====================================================" << endl << endl;
 	}
 
@@ -238,7 +235,8 @@ int RB_slipMHD_main(string data_dir_name)
 		}
 	}
 
-	if (my_id == master_id) cout << "No or processors = " << numprocs << endl << endl;
+	if (my_id == master_id)
+		cout << "Number of processors = " << numprocs << endl;
 
 	cout << "MY ID, local_N1, local_N1_start, local_N2, local_N2_start = " << my_id << "  "
 	     << local_N1 << "  " << local_N1_start << "  " << local_N2 << "  " << local_N2_start

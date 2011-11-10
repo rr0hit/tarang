@@ -1,13 +1,3 @@
-/*! \file  read_prog_para.cc
- *
- *	@brief  Reads prog prameters: prog_para_file, prog_kind, data_dir_name, D.
- *
- *	@author  M. K. Verma
- *	@version 4.0  MPI
- *	@date Sept 2008
- */
-
-
 #include "main.h"
 
 void Read_prog_para(string &kind, string& data_dir_name)
@@ -18,13 +8,12 @@ void Read_prog_para(string &kind, string& data_dir_name)
 	prog_para_file.open("prog_para.d");
 
 	if (my_id == master_id)
-		cout << endl << "======= Reading program parameters =========" << endl << endl << endl;
+		cout << "======= Program parameters =========" << endl;
 
-	if (! prog_para_file.is_open())
-		{
-			cout << "Unable to open prog_para_file: MY_ID  " << my_id <<  endl;
-			exit(1);
-		}
+	if (! prog_para_file.is_open())	{
+		cout << "Unable to open prog_para_file: MY_ID  " << my_id <<  endl;
+		exit(1);
+	}
 
 	while (!getline(prog_para_file, str).eof()) {
 		if (!str.length() || str[0] == '#')
@@ -39,6 +28,6 @@ void Read_prog_para(string &kind, string& data_dir_name)
 	if (my_id == master_id) {
 		cout << "Program: " << kind << endl;
 		cout << "data_dir_name: " << data_dir_name << endl;
-		cout  << "===========================================" << endl << endl;
+		cout << "====================================" << endl << endl;
 	}
 }
