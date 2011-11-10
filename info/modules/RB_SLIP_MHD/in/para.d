@@ -42,10 +42,10 @@
 
  
 #diss_coeff + diffusion_coefficient (If RB -- ignore it..)
-0	0
+0	0	0
 
 #Hyper_dissipation_switch + hyper dissipation coefficient
-0	0
+0	0	0
 
 
 U.Tinit 	0
