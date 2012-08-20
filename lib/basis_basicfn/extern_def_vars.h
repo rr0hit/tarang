@@ -136,6 +136,9 @@ extern DP		globalvar_temperature_grad;			// +1 for convection; -1 for stratifica
 													// factor for u3 in temperature eqn
 extern DP		globalvar_alpha_DT;	
 
+// for RB_SLIP_MHD
+extern DP globalvar_Q;
+extern DP globalvar_Pmag;
 
 // random extern vars
 					
