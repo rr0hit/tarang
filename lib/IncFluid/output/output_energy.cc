@@ -287,14 +287,15 @@ void IncFluid::Output_global(IncVF& W)
 
 void IncFluid::Output_global(IncVF& W, IncSF& T)		
 {	
-	static DP Hc;
+  static DP Hc, nusselt_no;
 
 	CV_Compute_totalenergy_diss(); 
 	W.CV_Compute_totalenergy_diss();
 	T.CS_Compute_totalenergy_diss();
 	
 	Hc = Get_cross_helicity(W);
-	
+	nusselt_no = Get_Nusselt_no(T);
+
 	CV_Compute_entropy();
 	W.CV_Compute_entropy();	
 	T.CS_Compute_entropy();
@@ -320,7 +321,8 @@ void IncFluid::Output_global(IncVF& W, IncSF& T)
 		
 		DP Rlambda = 2*CV_total_energy* sqrt(15/(dissipation_coefficient* total_diss)); 
 		 
-		global_file  << Tnow											<< "	"  
+		global_file  << Tnow											<< "	" 
+			     <<nusselt_no << " "
 			<<	CV_total_energy											<< " " 
 			<<	W.CV_total_energy										<< "  "
 			<<	T.CS_total_energy										<< "    " 
