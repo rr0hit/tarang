@@ -1,18 +1,18 @@
 #para.d
 #Only change the numerical fields -- Don't delete or add any line
 # N[i]	
-8	8	8
+32	32	32
 
 
-(1)solver-meta-para(int,float,string)		2	6	2
+(1)solver-meta-para(int,float,string)		2	8	2
 (2)Solver-para-int		1	1
-(3)Solver-para-float		1.0	1.0	1.0	10 6.8	1
-(4)Solver-para-string		PRLARGE	USMALL
+(3)Solver-para-float		1.0	1.0	1.0	2	0.25	1	2	0.25
+(4)Solver-para-string		PRSMALL	USMALL
 
 
 (1)basis_type		SCFT
 (2)alias_switch		DEALIAS
-(3)Integration_scheme	EULER
+(3)Integration_scheme	RK4
 (4)Input_number_mode	ASCII
 (5)Output_no_mode	ASCII
 
@@ -49,7 +49,7 @@
 
 
 U.Tinit 	0
-U.Tfinal 	0.005
+U.Tfinal 	5
 U.Tdt		0.001	
 U.Tdiag_basic_init	0.0
 U.Tdiag_advanced_init	0.0
@@ -108,7 +108,7 @@ ET:(1)real-imag-switch	0
 	
 
 (1)input-meta-para(int,float,string)		4	3	1
-(2)input-para-int:field_input_proc,N_in_reduceced	3	8	8	8
+(2)input-para-int:field_input_proc,N_in_reduceced	4	8	8	8
 (3)input-para-float		1.0	1.0	1.0
 (4)input-para-string		TEST
 
