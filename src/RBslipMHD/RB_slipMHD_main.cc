@@ -191,7 +191,8 @@ int RB_slipMHD_main(string data_dir_name)
 	else if (globalvar_Pr_switch == "PRSMALL") {
 		if (globalvar_RB_Uscaling == "USMALL") {
 			diss_coefficients[0] = 1.0;
-			diss_coefficients[1]  = 1/globalvar_Pr;
+			diss_coefficients[1] = 1/globalvar_Pmag;
+			diss_coefficients[2] = 1/globalvar_Pr;
 		} else if (globalvar_RB_Uscaling == "ULARGE") {
 			diss_coefficients[0] = sqrt(globalvar_Pr/globalvar_Ra);
 			diss_coefficients[1]  = 1/sqrt(globalvar_Pr*globalvar_Ra);
