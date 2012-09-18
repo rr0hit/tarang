@@ -5,8 +5,8 @@
 
 
 (1)solver-meta-para(int,float,string)		2	8	2
-(2)Solver-para-int		1	1
-(3)Solver-para-float		1.0	1.0	1.0	2	0.25	1	2	0.25
+(2)Solver-para-int		1	0
+(3)Solver-para-float		1.0	1.0	1.0	770	0.25	1	2	0.25
 (4)Solver-para-string		PRSMALL	USMALL
 
 
