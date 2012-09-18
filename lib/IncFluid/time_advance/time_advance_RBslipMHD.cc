@@ -98,7 +98,7 @@ void IncFluid::Time_advance(IncVF& W, IncSF& T)
 		W.Copy_field_from(Wcopy);
 		T.Copy_field_from(Scopy);
 
-		Single_time_step(W, Tdt, 1, 0.5, 1);					// u3 : Goto the mid pt
+		Single_time_step(W, T, Tdt, 1, 0.5, 1);					// u3 : Goto the mid pt
 
 		Compute_RK4_parts(W, T, tot_Vrhs, tot_Wrhs, tot_Srhs, Tdt, 0.5, Tdt/3);
 
@@ -125,6 +125,8 @@ void IncFluid::Time_advance(IncVF& W, IncSF& T)
 		*W.V1 = *W.V1 + (*tot_Wrhs.V1);
 		*W.V2 = *W.V2 + (*tot_Wrhs.V2);
 		*W.V3 = *W.V3 + (*tot_Wrhs.V3);
+
+		*T.F = *T.F + (*tot_Srhs.F);
 
 	}			// Of RK4
 
