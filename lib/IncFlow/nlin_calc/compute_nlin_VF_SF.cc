@@ -59,7 +59,22 @@ void IncVF::Compute_nlin(IncVF& W, IncSF& T)
 {
 
 	// compute U.nlin and W(B).nlin
-	IncVF:: Compute_nlin(W);							
+        DP multiplier = sqrt(globalvar_Q*globalvar_Pmag);
+        *W.V1 = (*W.V1)*multiplier;
+	*W.V2 = (*W.V2)*multiplier;
+	*W.V3 = (*W.V3)*multiplier;
+	IncVF:: Compute_nlin(W);
+	*W.V1 = (*W.V1)/multiplier;
+	*W.V2 = (*W.V2)/multiplier;
+	*W.V3 = (*W.V3)/multiplier;
+
+	*W.V1r = (*W.V1r)/multiplier;
+	*W.V2r = (*W.V2r)/multiplier;
+	*W.V3r = (*W.V3r)/multiplier;
+
+	*W.nlin1 = (*W.nlin1)/multiplier;
+	*W.nlin2 = (*W.nlin2)/multiplier;
+	*W.nlin3 = (*W.nlin3)/multiplier;
 
 //
 //	Now compute T.nlin = Dj T [Vj T]	
