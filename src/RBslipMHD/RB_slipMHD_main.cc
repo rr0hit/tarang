@@ -318,6 +318,7 @@ int RB_slipMHD_main(string data_dir_name)
 
 		// Output at new time..
 		U.CV_Compute_totalenergy_diss();
+		W.CV_Compute_totalenergy_diss();
 		T.CS_Compute_totalenergy_diss();
 		if ( isnan(U.CV_total_energy) || isnan(T.CS_total_energy) ) {
 			cout << "ERROR: Numerical Overflow " << endl;
