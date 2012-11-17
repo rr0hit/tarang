@@ -57,24 +57,79 @@
 
 void IncVF::Compute_nlin(IncVF& W, IncSF& T) 
 {
+  // compute U.nlin and W(B).nlin
+  if(globalvar_Q!=0){
+    DP multiplier = sqrt(globalvar_Q*globalvar_Pmag);
+    *W.V1 = (*W.V1)*multiplier;
+    *W.V2 = (*W.V2)*multiplier;
+    *W.V3 = (*W.V3)*multiplier;
+    IncVF:: Compute_nlin(W);
+    *W.V1 = (*W.V1)/multiplier;
+    *W.V2 = (*W.V2)/multiplier;
+    *W.V3 = (*W.V3)/multiplier;
+    
+    *W.V1r = (*W.V1r)/multiplier;
+    *W.V2r = (*W.V2r)/multiplier;
+    *W.V3r = (*W.V3r)/multiplier;
+    
+    *W.nlin1 = (*W.nlin1)/multiplier;
+    *W.nlin2 = (*W.nlin2)/multiplier;
+    *W.nlin3 = (*W.nlin3)/multiplier;
+  }
+  
+  else{
+    *V1r = *V1;
+    *V2r = *V2;
+    *V3r = *V3;
 
-	// compute U.nlin and W(B).nlin
-        DP multiplier = sqrt(globalvar_Q*globalvar_Pmag);
-        *W.V1 = (*W.V1)*multiplier;
-	*W.V2 = (*W.V2)*multiplier;
-	*W.V3 = (*W.V3)*multiplier;
-	IncVF:: Compute_nlin(W);
-	*W.V1 = (*W.V1)/multiplier;
-	*W.V2 = (*W.V2)/multiplier;
-	*W.V3 = (*W.V3)/multiplier;
+    *W.V1r = *W.V1;
+    *W.V2r = *W.V2;
+    *W.V3r = *W.V3;
 
-	*W.V1r = (*W.V1r)/multiplier;
-	*W.V2r = (*W.V2r)/multiplier;
-	*W.V3r = (*W.V3r)/multiplier;
+    RVF::RV_Inverse_transform(*VF_temp_r); 
+    W.RV_Inverse_transform(*VF_temp_r);
 
-	*W.nlin1 = (*W.nlin1)/multiplier;
-	*W.nlin2 = (*W.nlin2)/multiplier;
-	*W.nlin3 = (*W.nlin3)/multiplier;
+    // nlin <- (v.d)v
+    Compute_RSprod_diag();
+    NLIN_diag_Forward_transform_derivative(*VF_temp_r);
+    Compute_RSprod_offdiag();
+    RV_Forward_transform_RSprod(*VF_temp_r);
+    Derivative_RSprod_VV();
+
+    // (b.d)b not to be computed as Q=0
+    // save (v.d)v
+    Array<complx,3> *tmp_nlin1, *tmp_nlin2, *tmp_nlin3;
+    tmp_nlin1 = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
+    tmp_nlin2 = new Array<complx,3>(local_N1, N[2],N[3]/2+1);	
+    tmp_nlin3 = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
+    *tmp_nlin1 = *nlin1;
+    *tmp_nlin2 = *nlin2;
+    *tmp_nlin3 = *nlin3;
+
+    // nlin <- (v.d)b and *W.nlin <- (b.d)v	
+    Compute_RSprod_diag(W);								
+    NLIN_diag_Forward_transform_derivative(*VF_temp_r);
+    *W.nlin1 = *nlin1;  
+    *W.nlin2 = *nlin2;	
+    *W.nlin3 = *nlin3;		
+    Compute_RSprod_offdiag(W);
+    RV_Forward_transform_RSprod(*VF_temp_r);
+    W.RV_Forward_transform_RSprod(*VF_temp_r);
+
+    Derivative_RSprod_VV(W);
+
+    *W.nlin1 = *nlin1 - *W.nlin1;
+    *W.nlin2 = *nlin2 - *W.nlin2;
+    *W.nlin3 = *nlin3 - *W.nlin3;
+
+    *nlin1 = *tmp_nlin1;
+    *nlin2 = *tmp_nlin2;
+    *nlin3 = *tmp_nlin3;
+
+    delete tmp_nlin1;
+    delete tmp_nlin2;
+    delete tmp_nlin3;
+  }
 
 //
 //	Now compute T.nlin = Dj T [Vj T]	
