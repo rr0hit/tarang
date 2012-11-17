@@ -137,6 +137,9 @@ void IncFluid::Compute_force_RB
 	*W.Force3 = (*temparray)/globalvar_Pmag;
 	delete temparray;
 
+	*Force2 += -1*sqrt(globalvar_T)*(*V3);
+	*Force3 += sqrt(globalvar_T)*(*V2);
+
 	if (alias_switch == "DEALIAS")		W.Dealias_force();
 }
 

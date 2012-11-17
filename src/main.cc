@@ -57,6 +57,7 @@ DP		globalvar_alpha_DT;						// nondim number alpha*DT
 // for RB_SLIP_MHD
 DP globalvar_Q;
 DP globalvar_Pmag; // Magnetic prandtl number
+DP globalvar_T; // Taylor number
 
 Uniform<DP> SPECrand;					// Global variable for random no generation
 

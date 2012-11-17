@@ -139,6 +139,7 @@ extern DP		globalvar_alpha_DT;
 // for RB_SLIP_MHD
 extern DP globalvar_Q;
 extern DP globalvar_Pmag;
+extern DP globalvar_T;
 
 // random extern vars
 					

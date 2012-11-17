@@ -141,6 +141,7 @@ int RB_slipMHD_main(string data_dir_name)
 	globalvar_temperature_grad = solver_double_para(6);  // +1 for RB and -1 for stratified
 	globalvar_Q = solver_double_para(7);
 	globalvar_Pmag = solver_double_para(8);
+	globalvar_T = solver_double_para(9);
 
 	if (my_id == master_id) {
 		cout << "Rayleigh number Ra =  " << globalvar_Ra << endl;
