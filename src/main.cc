@@ -47,6 +47,8 @@ string globalvar_prog_kind;
 // for RB
 string	globalvar_Pr_switch;					// Prandtl number switch (PRLARGNE..) for RB
 string	globalvar_RB_Uscaling;					// UBscaling (ULARGE... ) for RB
+string  globalvar_Pm_switch;
+string  globalvar_mag_field_switch;
 DP		globalvar_Ra;							// Rayleigh number
 DP		globalvar_r;							// normalized Rayleigh number
 DP		globalvar_Pr;							// Prandtl number

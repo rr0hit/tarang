@@ -122,19 +122,39 @@ void IncFluid::Compute_force_RB
 	*W.Force3 = 0.0;
 
        	Array<complx,3> *temparray;
-	temparray = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
-	Yderiv_SCFT(N, *W.V1, *temparray, kfactor);
-	*Force1 += (*temparray)*globalvar_Q;
-	Yderiv_SCFT(N, *W.V2, *temparray, kfactor);
-	*Force2 += (*temparray)*globalvar_Q;
-	Yderiv_SCFT(N, *W.V3, *temparray, kfactor);
-	*Force3 += (*temparray)*globalvar_Q;
-	Yderiv_SCFT(N, *V1, *temparray, kfactor);
-	*W.Force1 = (*temparray)/globalvar_Pmag;
-	Yderiv_SCFT(N, *V2, *temparray, kfactor);
-	*W.Force2 = (*temparray)/globalvar_Pmag;
-	Yderiv_SCFT(N, *V3, *temparray, kfactor);
-	*W.Force3 = (*temparray)/globalvar_Pmag;
+	if(globalvar_mag_field_switch == "VERTICAL"){
+	  temparray = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
+	  Xderiv_Cos_SCFT(N, *W.V1, *temparray, kfactor);
+	  *Force1 += (*temparray)*globalvar_Q;
+	  Xderiv_Sin_SCFT(N, *W.V2, *temparray, kfactor);
+	  *Force2 += (*temparray)*globalvar_Q;
+	  Xderiv_Sin_SCFT(N, *W.V3, *temparray, kfactor);
+	  *Force3 += (*temparray)*globalvar_Q;
+	  if(globalvar_Pm_switch != "PMZERO"){
+	    Xderiv_Sin_SCFT(N, *V1, *temparray, kfactor);
+	    *W.Force1 = (*temparray)/globalvar_Pmag;
+	    Xderiv_Cos_SCFT(N, *V2, *temparray, kfactor);
+	    *W.Force2 = (*temparray)/globalvar_Pmag;
+	    Xderiv_Cos_SCFT(N, *V3, *temparray, kfactor);
+	    *W.Force3 = (*temparray)/globalvar_Pmag;
+	  }
+	  else if(globalvar_mag_field_switch == "HORIZONTAL"){
+	    temparray = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
+	    Yderiv_SCFT(N, *W.V1, *temparray, kfactor);
+	    *Force1 += (*temparray)*globalvar_Q;
+	    Yderiv_SCFT(N, *W.V2, *temparray, kfactor);
+	    *Force2 += (*temparray)*globalvar_Q;
+	    Yderiv_SCFT(N, *W.V3, *temparray, kfactor);
+	    *Force3 += (*temparray)*globalvar_Q;
+	    if(globalvar_Pm_switch != "PMZERO"){
+	      Yderiv_SCFT(N, *V1, *temparray, kfactor);
+	      *W.Force1 = (*temparray)/globalvar_Pmag;
+	      Yderiv_SCFT(N, *V2, *temparray, kfactor);
+	      *W.Force2 = (*temparray)/globalvar_Pmag;
+	      Yderiv_SCFT(N, *V3, *temparray, kfactor);
+	      *W.Force3 = (*temparray)/globalvar_Pmag;
+	    }
+	  }
 	delete temparray;
 
 	*Force2 += -1*sqrt(globalvar_T)*(*V3);

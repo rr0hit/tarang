@@ -894,6 +894,37 @@ void  IncFluid::Init_cond_modes_VORTICITY(IncVF& W, IncSF& T)
 					<< G << endl;
 	}
 
+	if (globalvar_Pm_switch == "PMZERO")
+	{ 
+	  Array<complx,3> *temparray;
+	  if(globalvar_mag_field_switch == "VERTICAL"){
+	    temparray = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
+	    Xderiv_Sin_SCFT(N, *V1, *temparray, kfactor);
+	    *W.V1 = *temparray;
+	    Array_divide_ksqr(basis_type, N, *W.V1, kfactor);
+	    Xderiv_Cos_SCFT(N, *V2, *temparray, kfactor);
+	    *W.V2 = *temparray;
+	    Array_divide_ksqr(basis_type, N, *W.V2, kfactor);
+	    Xderiv_Cos_SCFT(N, *V3, *temparray, kfactor);
+	    *W.V3 = *temparray;
+	    Array_divide_ksqr(basis_type, N, *W.V3, kfactor);
+	    delete temparray;
+	  }
+	  else if(globalvar_mag_field_switch == "HORIZONTAL"){
+	    temparray = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
+	    Yderiv_SCFT(N, *V1, *temparray, kfactor);
+	    *W.V1 = *temparray;
+	    Array_divide_ksqr(basis_type, N, *W.V1, kfactor);
+	    Yderiv_SCFT(N, *V2, *temparray, kfactor);
+	    *W.V2 = *temparray;
+	    Array_divide_ksqr(basis_type, N, *W.V2, kfactor);
+	    Yderiv_SCFT(N, *V3, *temparray, kfactor);
+	    *W.V3 = *temparray;
+	    Array_divide_ksqr(basis_type, N, *W.V3, kfactor);
+	    delete temparray;
+	  }
+	}
+
 	if (my_id == master_id)
 		cout << "**********************************************" << endl;
 

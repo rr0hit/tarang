@@ -153,6 +153,8 @@ int RB_slipMHD_main(string data_dir_name)
 	globalvar_Pr_switch = solver_string_para[1];
 
 	globalvar_RB_Uscaling = solver_string_para[2];
+	globalvar_Pm_switch = solver_string_para[3];
+	globalvar_mag_field_switch = solver_string_para[4];
 
 	if (my_id == master_id) {
 		cout << "Pr_switch = " << globalvar_Pr_switch << endl;
@@ -192,7 +194,10 @@ int RB_slipMHD_main(string data_dir_name)
 	else if (globalvar_Pr_switch == "PRSMALL") {
 		if (globalvar_RB_Uscaling == "USMALL") {
 			diss_coefficients[0] = 1.0;
-			diss_coefficients[1] = 1/globalvar_Pmag;
+			if(globalvar_Pm_switch != "PMZERO")
+			  diss_coefficients[1] = 1/globalvar_Pmag;
+			else
+			  diss_coefficients[1] = 0.0;
 			diss_coefficients[2] = 1/globalvar_Pr;
 		} else if (globalvar_RB_Uscaling == "ULARGE") {
 			diss_coefficients[0] = sqrt(globalvar_Pr/globalvar_Ra);
@@ -256,15 +261,20 @@ int RB_slipMHD_main(string data_dir_name)
 		    ET_parameters, ET_shell_radii_sector_array,
 		    init_cond_meta_para, init_cond_int_para,
 		    init_cond_double_para, init_cond_string_para,
-		    force_meta_para, force_int_para, force_double_para, force_string_para
-		    );
+		    force_meta_para, force_int_para, force_double_para, force_string_para);
 
+	bool isvertical;
+	if(globalvar_mag_field_switch == "VERTICAL"){
+	  isvertical = true;
+	}
+	else{
+	  isvertical = false;
+	}
+	
 	IncVF     W(N, string_switches, switches, kfactor,
 		    diss_coefficients[1], hyper_diss_coefficients[1],
 		    misc_output_para,
-		    ET_parameters, ET_shell_radii_sector_array
-		    );
-
+		    ET_parameters, ET_shell_radii_sector_array, isvertical);
 
 	IncSF     T(N, string_switches, switches, kfactor,
 		    diss_coefficients[2], hyper_diss_coefficients[2],

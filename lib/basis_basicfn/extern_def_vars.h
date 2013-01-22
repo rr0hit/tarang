@@ -129,6 +129,8 @@ extern string	globalvar_prog_kind;				// program kind like INC_FLUID
 // for RB
 extern string	globalvar_Pr_switch;				// Prandtl number switch (PRLARGNE..) for RB
 extern string	globalvar_RB_Uscaling;				// UBscaling (ULARGE... ) for RB
+extern string   globalvar_Pm_switch;
+extern string   globalvar_mag_field_switch;
 extern DP		globalvar_Ra;						// Rayleigh number
 extern DP		globalvar_r;						// normalized Rayleigh number
 extern DP		globalvar_Pr;						// Prandtl number

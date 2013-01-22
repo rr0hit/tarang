@@ -184,7 +184,8 @@ class IncVF: public CVF, public RVF, public NLIN , public EnergyTr
 		DP hyper_diss_coefficient, 
 		Array<int,1> misc_output_para,
 		Array<int,1> ET_parameters, 
-		Array<DP,1> ET_shell_radii_sector_array
+		Array<DP,1> ET_shell_radii_sector_array,
+		bool isv = false
 	);
 	
 	void Mult_field_exp_ksqr_dt(DP dt, DP a);

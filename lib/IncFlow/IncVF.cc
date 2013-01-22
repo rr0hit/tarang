@@ -54,10 +54,11 @@ IncVF::IncVF
 	DP hyper_diss_coefficient, 
 	Array<int,1> misc_output_para,
 	Array<int,1> ET_parameters, 
-	Array<DP,1>  ET_shell_radii_sector_array
+	Array<DP,1>  ET_shell_radii_sector_array,
+	bool isv
 ): 
 	
-		CVF(NN, string_switches, switches, prog_kfactor, misc_output_para), 
+                CVF(NN, string_switches, switches, prog_kfactor, misc_output_para, isv), 
 		RVF(NN, string_switches),
 		NLIN(NN, string_switches, switches, prog_kfactor, misc_output_para), 
 		EnergyTr(NN, string_switches, switches, prog_kfactor, 

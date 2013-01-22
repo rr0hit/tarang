@@ -52,10 +52,12 @@ CVF::CVF
 	string string_switches[], 
 	Array<int,1> switches,
 	DP *kfactor, 
-	Array<int,1> misc_output_para
+	Array<int,1> misc_output_para,
+	bool isv
 ) 
 {
 
+        isvert = isv;
 	CV_basis_type			= string_switches[1];
 	CV_alias_switch			= string_switches[2];	
 	CV_no_input_field_mode	= string_switches[4];
@@ -293,9 +295,16 @@ void CVF::Init_fftw_plan()
 
 void CVF::CV_Forward_transform(Array<complx,3> temp_r)					
 {
+  if(isvert){
+    Forward_transform_array(CV_basis_type, Ncv, *V1, temp_r, 0);			// CFT
+    Forward_transform_array(CV_basis_type, Ncv, *V2, temp_r, 1);			// SFT
+    Forward_transform_array(CV_basis_type, Ncv, *V3, temp_r, 1);			// SFT    
+  }
+  else{
 	Forward_transform_array(CV_basis_type, Ncv, *V1, temp_r, 1);			// SFT
 	Forward_transform_array(CV_basis_type, Ncv, *V2, temp_r, 0);			// CFT
 	Forward_transform_array(CV_basis_type, Ncv, *V3, temp_r, 0);			// CFT	
+  }
 }
 
 
@@ -338,9 +347,16 @@ void CVF::CV_Forward_transform_transpose_order
 
 void CVF::CV_Inverse_transform(Array<complx,3> temp_r)
 {
+  if(isvert){
+    Inverse_transform_array(CV_basis_type, Ncv, *V1, temp_r, 0);			// ICFT
+    Inverse_transform_array(CV_basis_type, Ncv, *V2, temp_r, 1);			// ISFT
+    Inverse_transform_array(CV_basis_type, Ncv, *V3, temp_r, 1);			// ISFT
+  }
+  else{
 	Inverse_transform_array(CV_basis_type, Ncv, *V1, temp_r, 1);			// ISFT
 	Inverse_transform_array(CV_basis_type, Ncv, *V2, temp_r, 0);			// ICFT
 	Inverse_transform_array(CV_basis_type, Ncv, *V3, temp_r, 0);			// ICFT	
+  }
 }
 
 

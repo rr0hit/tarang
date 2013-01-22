@@ -251,7 +251,7 @@ public:
 	 *  m=1:  for \f$ \Delta u_{\perp} \f$
 	 */
 	Array<DP,4> *CV_st_planar;				
-																						
+	bool isvert;																					
 	//*****************************************************************************************
 	
 public:
@@ -267,7 +267,8 @@ public:
 		string string_switches[], 
 		Array<int,1> switches,
 		DP *kfactor, 
-		Array<int,1> misc_output_para
+		Array<int,1> misc_output_para,
+		bool isv = false
 	);
  
 	/// Copy curr Vi's to VF to.

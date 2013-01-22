@@ -58,8 +58,12 @@
 void IncVF::Compute_nlin(IncVF& W, IncSF& T) 
 {
   // compute U.nlin and W(B).nlin
-  if(globalvar_Q!=0){
-    DP multiplier = sqrt(globalvar_Q*globalvar_Pmag);
+  if(globalvar_Pm_switch!="PMZERO"){
+    DP multiplier;
+    if(globalvar_mag_field_switch!="NOFILED")
+      multiplier = sqrt(globalvar_Q*globalvar_Pmag);
+    else
+      multiplier = sqrt(globalvar_Pmag);
     *W.V1 = (*W.V1)*multiplier;
     *W.V2 = (*W.V2)*multiplier;
     *W.V3 = (*W.V3)*multiplier;
