@@ -4,10 +4,10 @@
 32	32	32
 
 
-(1)solver-meta-para(int,float,string)		2	9	2
+(1)solver-meta-para(int,float,string)		2	9	4
 (2)Solver-para-int		1	0
 (3)Solver-para-float		1.0	1.0	1.0	770	0.25	1	2	0.25	0
-(4)Solver-para-string		PRSMALL	USMALL
+(4)Solver-para-string		PRSMALL	USMALL PMNONZERO VERTICAL
 
 
 (1)basis_type		SCFT
