@@ -138,6 +138,7 @@ void IncFluid::Compute_force_RB
 	    Xderiv_Cos_SCFT(N, *V3, *temparray, kfactor);
 	    *W.Force3 = (*temparray)/globalvar_Pmag;
 	  }
+	  delete temparray;
 	}
 	else if(globalvar_mag_field_switch == "HORIZONTAL"){
 	  temparray = new Array<complx,3>(local_N1, N[2],N[3]/2+1);
@@ -155,8 +156,8 @@ void IncFluid::Compute_force_RB
 	    Yderiv_SCFT(N, *V3, *temparray, kfactor);
 	    *W.Force3 = (*temparray)/globalvar_Pmag;
 	  }
+	  delete temparray;
 	}
-	delete temparray;
 
 	*Force2 += -1*sqrt(globalvar_T)*(*V3);
 	*Force3 += sqrt(globalvar_T)*(*V2);
