@@ -1,5 +1,5 @@
 #include "../main.h"
-
+#include "chandrasekhar.h"
 // Global variables
 extern int my_id;								// My process id
 extern int numprocs;							// No of processors
@@ -114,6 +114,12 @@ int RB_slipMHD_main(string data_dir_name)
 
 	DP	kfactor[4];
 
+	globalvar_Pr = solver_double_para(5);
+	globalvar_temperature_grad = solver_double_para(6);  // +1 for RB and -1 for stratified
+	globalvar_Q = solver_double_para(7);
+	globalvar_Pmag = solver_double_para(8);
+	globalvar_T = solver_double_para(9);
+
 	if (solver_int_para(1) == 0) {		// kfactor as given
 		kfactor[1] = solver_double_para(1);
 		kfactor[2] = solver_double_para(2);
@@ -126,6 +132,22 @@ int RB_slipMHD_main(string data_dir_name)
 		kfactor[2] = k0 * solver_double_para(2);
 		kfactor[3] = k0 * solver_double_para(3);
 	}
+	
+	else if (solver_int_para(1) == 2) {
+	  // for stationary convection. Pr > Pm
+	  k0 = findKVert_stationary(globalvar_Q);
+	  kfactor[1] = M_PI * solver_double_para(1);
+	  kfactor[2] = k0 * solver_double_para(2);
+	  kfactor[3] = k0 * solver_double_para(3);
+	}
+
+	else if (solver_int_para(1) == 3) {
+	  // for oscillatory convection. Pr < Pm
+	  k0 = findKVert_oscillatory(globalvar_Q, globalvar_Pr, globalvar_Pmag);
+	  kfactor[1] = M_PI * solver_double_para(1);
+	  kfactor[2] = k0 * solver_double_para(2);
+	  kfactor[3] = k0 * solver_double_para(3);
+	}
 
 	if (my_id == master_id)
 		cout << "kfactor: " << kfactor[1] << " "  << kfactor[2] << " "  << kfactor[3] << endl;
@@ -136,12 +158,10 @@ int RB_slipMHD_main(string data_dir_name)
 		globalvar_Ra = solver_double_para(4);
 	else if (solver_int_para(2) == 1)
 		globalvar_Ra = (27.0*pow4(M_PI)/4.0)*solver_double_para(4);
-
-	globalvar_Pr = solver_double_para(5);
-	globalvar_temperature_grad = solver_double_para(6);  // +1 for RB and -1 for stratified
-	globalvar_Q = solver_double_para(7);
-	globalvar_Pmag = solver_double_para(8);
-	globalvar_T = solver_double_para(9);
+	else if (solver_int_para(2) == 2)
+	        globalvar_Ra = findRcVert_stationary(globalvar_Q)*solver_double_para(4);
+	else if (solver_int_para(2) == 3)
+	        globalvar_Ra = findRcVert_oscillatory(globalvar_Q, globalvar_Pr, globalvar_Pmag)*solver_double_para(4);
 
 	if (my_id == master_id) {
 		cout << "Rayleigh number Ra =  " << globalvar_Ra << endl;
