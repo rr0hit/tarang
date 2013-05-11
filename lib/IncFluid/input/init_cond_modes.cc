@@ -925,6 +925,8 @@ void  IncFluid::Init_cond_modes_VORTICITY(IncVF& W, IncSF& T)
 	  }
 	}
 
+	Zero_modes_RB_slip(W, T);
+
 	if (my_id == master_id)
 		cout << "**********************************************" << endl;
 

@@ -65,8 +65,16 @@ void  IncVF::Zero_modes_RB_slip(IncVF& W, IncSF& T)
 {
 	if (my_id == 0)
 	{
-		cout << "Implement zero mode " << endl;
-		exit(1);
+		if (my_id == 0)
+			for (int j=0; j<N[2]; j++)
+				for (int k=0; k<=N[3]/2; k++)
+				{
+					(*V1)(0,j,k) = (*T.F)(0,j,k) = 0.0;
+					if(globalvar_mag_field_switch == "HORIZONTAL")
+						(*W.V1)(0, j, k) = 0.0;
+					else if(globalvar_mag_field_switch == "VERTICAL")
+						(*W.V2)(0, j, k) = (*W.V3)(0, j, k) = 0.0;
+				}
 	}	
 		
 }				
